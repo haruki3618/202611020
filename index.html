@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMORY GAME</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="game-container">
+            <header class="game-header">
+                <p class="game-label">MEMORY CHALLENGE</p>
+                <h1>MEMORY GAME</h1>
+                <p class="game-description">同じ絵柄のカードを見つけよう</p>
+            </header>
+
+            <div class="game-info">
+                <div class="info-box">
+                    <span class="info-label">TURN</span>
+                    <span class="info-value">{{ turns }}</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">PAIRS</span>
+                    <span class="info-value">{{ matchedPairs }} / {{ cardImages.length }}</span>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div
+                    v-for="card in cards"
+                    :key="card.id"
+                    class="card"
+                    :class="{ flipped: card.flipped, matched: card.matched }"
+                    @click="flipCard(card)"
+                >
+                    <div class="card-inner">
+                        <div class="card-back"></div>
+                        <div class="card-front">
+                            <img :src="card.image" :alt="card.name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="isGameClear" class="result-panel">
+                <h2>GAME CLEAR!</h2>
+                <p>すべてのカードを揃えました。</p>
+                <p class="result-score"><span>{{ turns }}</span> TURN</p>
+            </div>
+
+            <button class="restart-button" @click="restartGame">RESTART GAME</button>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
